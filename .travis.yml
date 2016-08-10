@@ -10,6 +10,3 @@ otp_release:
 sudo: false
 script:
   - mix espec
-notifications:
-  recipients:
-    - marcin@saepia.net
