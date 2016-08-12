@@ -14,9 +14,15 @@ defmodule OpenStax.Swift.Endpoint do
   @doc """
   Registers new endpoint.
   """
-  def register(endpoint_id, auth_token \\ nil, endpoint_url \\ nil, signing_key \\ nil) do
+  def register(endpoint_id, auth_token \\ nil, token_exp_date \\ nil,
+    endpoint_url \\ nil, signing_key \\ nil) do
     Agent.update(OpenStax.Swift.Endpoint, fn(state) ->
-      Map.put(state, endpoint_id, %{auth_token: auth_token, endpoint_url: endpoint_url, signing_key: signing_key})
+      Map.put(state, endpoint_id, %{
+        auth_token: auth_token,
+        token_exp_date: token_exp_date,
+        endpoint_url: endpoint_url,
+        signing_key: signing_key
+      })
     end)
   end
 
@@ -34,9 +40,15 @@ defmodule OpenStax.Swift.Endpoint do
   @doc """
   Sets current configuration for a endpoint.
   """
-  def set_config(endpoint_id, auth_token, endpoint_url, signing_key \\ nil) do
+  def set_config(endpoint_id, auth_token, token_exp_date,
+    endpoint_url, signing_key \\ nil) do
     Agent.update(OpenStax.Swift.Endpoint, fn(state) ->
-      Map.put(state, endpoint_id, %{auth_token: auth_token, endpoint_url: endpoint_url, signing_key: signing_key})
+      Map.put(state, endpoint_id, %{
+        auth_token: auth_token,
+        token_exp_date: token_exp_date,
+        endpoint_url: endpoint_url,
+        signing_key: signing_key
+      })
     end)
   end
 end
