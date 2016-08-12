@@ -5,10 +5,10 @@
 
 Project in the early stage of development. API may change without prior warning.
 
-# Forked Repos
+## Forked Repos
 
 https://github.com/mspanc/openstax_swift
 
-# License
+## License
 
-MIT
+This application is made available under the terms of [The MIT License (MIT)](LICENSE)
