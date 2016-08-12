@@ -1,4 +1,5 @@
-# OpenStax Swift
+# Elixir OpenStack Swift
+
 [![Build Status](https://travis-ci.org/jimbeaudoin/elixir-openstack-swift.svg?branch=master)](https://travis-ci.org/jimbeaudoin/elixir-openstack-swift)
 
 ## Status
