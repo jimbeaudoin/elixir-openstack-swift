@@ -46,8 +46,8 @@ defmodule OpenStax.Swift.Mixfile do
   defp package do
     [description: "OpenStack Swift client",
      files: ["lib",  "mix.exs", "README*", "LICENSE"],
-     maintainers: ["Marcin Lewandowski"],
+     maintainers: ["Jimmy Beaudoin"],
      licenses: ["MIT"],
-     links: %{github: "https://github.com/mspanc/openstax_swift"}]
+     links: %{github: "https://github.com/jimbeaudoin/elixir-openstack-swift"}]
   end
 end
