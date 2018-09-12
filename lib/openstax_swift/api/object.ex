@@ -28,7 +28,7 @@ defmodule OpenStax.Swift.API.Object do
   """
   def create(endpoint_id, container, object, body, metadata \\ nil) do
     case OpenStax.Swift.Request.request(endpoint_id, :put, [to_string(container), to_string(object)], [201], [ body: body, metadata: metadata ]) do
-      {:ok, code, headers, body} ->
+      {:ok, _code, headers, _body} ->
         {"Etag", etag} = List.keyfind(headers, "Etag", 0)
 
         {:ok, %{ etag: etag }}
@@ -45,8 +45,11 @@ defmodule OpenStax.Swift.API.Object do
   See http://developer.openstack.org/api-ref-objectstorage-v1.html#copyObject
   """
   def copy(endpoint_id, source_container, source_object, destination_container, destination_object, copy_manifest \\ false) do
-    query = nil
-    if copy_manifest, do: query = %{"multipart-manifest" => "copy"}
+    query =
+      case copy_manifest do
+        true -> %{"multipart-manifest" => "copy"}
+        false -> nil
+      end
 
     OpenStax.Swift.Request.request(endpoint_id, :copy, [to_string(source_container), to_string(source_object)], [201], [
       headers: [{"Destination", "#{destination_container}/#{destination_object}"}],
@@ -61,8 +64,12 @@ defmodule OpenStax.Swift.API.Object do
   See http://developer.openstack.org/api-ref-objectstorage-v1.html#deleteObject
   """
   def delete(endpoint_id, container, object, delete_manifest \\ false) do
-    query = nil
-    if delete_manifest, do: query = %{"multipart-manifest" => "delete"}
+    query =
+      case delete_manifest do
+        true -> %{"multipart-manifest" => "delete"}
+        false -> nil
+      end
+
 
     OpenStax.Swift.Request.request(endpoint_id, :delete, [to_string(container), to_string(object)], [204], [
       query: query
@@ -115,14 +122,14 @@ defmodule OpenStax.Swift.API.Object do
 
   See http://docs.openstack.org/developer/swift/api/large_objects.html#dynamic-large-objects
   """
-  def create_dlo_manifest(endpoint_id, container, object, segments_container, segments_object_prefix, content_type \\ "application/octet-stream", content_disposition \\ "attachment", filename \\ nil) do
+  def create_dlo_manifest(endpoint_id, container, object, segments_container, segments_object_prefix, _content_type \\ "application/octet-stream", content_disposition \\ "attachment", filename \\ nil) do
     headers = [{"X-Object-Manifest", "#{segments_container}/#{segments_object_prefix}"}]
     if !is_nil(filename) do
       headers = headers ++ [{"Content-Disposition", "#{content_disposition}; filename=\"#{String.replace(filename, "\"", "")}\""}]
     end
 
     case OpenStax.Swift.Request.request(endpoint_id, :put, [to_string(container), to_string(object)], [201], [headers: headers]) do
-      {:ok, code, headers, body} ->
+      {:ok, _code, headers, _body} ->
         {"Etag", etag} = List.keyfind(headers, "Etag", 0)
 
         {:ok, %{ etag: etag }}
