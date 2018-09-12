@@ -11,9 +11,9 @@ defmodule OpenStax.Swift.Mixfile do
      licenses: ["MIT"],
      name: "OpenStax.Swift",
      source_url: "https://github.com/mspanc/openstax_swift",
-     package: package,
+     package: package(),
      preferred_cli_env: [espec: :test],
-     deps: deps]
+     deps: deps()]
   end
 
 
