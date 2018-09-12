@@ -6,11 +6,11 @@ defmodule OpenStax.Swift.Mixfile do
      version: "0.1.4",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
-     description: "OpenStack Swift client",
-     maintainers: ["Marcin Lewandowski"],
+     description: "OpenStack Swift Client",
+     maintainers: ["Jimmy Beaudoin"],
      licenses: ["MIT"],
-     name: "OpenStax.Swift",
-     source_url: "https://github.com/mspanc/openstax_swift",
+     name: "OpenStack Swift Client",
+     source_url: "https://github.com/jimbeaudoin/elixir-openstack-swift",
      package: package(),
      preferred_cli_env: [espec: :test],
      deps: deps()]
@@ -44,7 +44,7 @@ defmodule OpenStax.Swift.Mixfile do
 
 
   defp package do
-    [description: "OpenStack Swift client",
+    [description: "OpenStack Swift Client",
      files: ["lib",  "mix.exs", "README*", "LICENSE"],
      maintainers: ["Jimmy Beaudoin"],
      licenses: ["MIT"],
