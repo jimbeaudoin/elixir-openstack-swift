@@ -124,9 +124,12 @@ defmodule OpenStax.Swift.API.Object do
   """
   def create_dlo_manifest(endpoint_id, container, object, segments_container, segments_object_prefix, _content_type \\ "application/octet-stream", content_disposition \\ "attachment", filename \\ nil) do
     headers = [{"X-Object-Manifest", "#{segments_container}/#{segments_object_prefix}"}]
-    if !is_nil(filename) do
-      headers = headers ++ [{"Content-Disposition", "#{content_disposition}; filename=\"#{String.replace(filename, "\"", "")}\""}]
-    end
+
+    headers =
+      case !is_nil(filename) do
+        true  -> headers ++ [{"Content-Disposition", "#{content_disposition}; filename=\"#{String.replace(filename, "\"", "")}\""}]
+        false -> headers
+      end
 
     case OpenStax.Swift.Request.request(endpoint_id, :put, [to_string(container), to_string(object)], [201], [headers: headers]) do
       {:ok, _code, headers, _body} ->
